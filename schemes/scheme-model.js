@@ -17,10 +17,12 @@ function findById(id) {
     .where({ id }).first()
 }
 
-function findSteps(id) {
-    return db ("steps")
-    .where({ id })
-}
+function findSteps(id){
+    return db('steps').where("scheme_id" , id)
+    .join('schemes', 'steps.scheme_id', 'schemes.id' )
+    .select('steps.id','schemes.scheme_name', 'steps.step_number', 'steps.instructions')
+    .orderBy('steps.step_number')
+  }
 
 function add(schemeData) {
     return db("schemes")
